@@ -1,6 +1,7 @@
 #include "srhw.h"
 
 static const srhw_driver_t drivers[] = {
+	srhw_sriv_drv,	
 	srhw_motor_drv,
 	NULL,
 };

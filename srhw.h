@@ -1,6 +1,7 @@
 #ifndef __SRHW_H
 #define __SRHW_H
 #include "motor.h"
+#include "sricdriv.h"
 
 /* Initialise the library.
    Return 0 on success, -ve on fail. */
