@@ -1,5 +1,7 @@
 #include "motor.h"
 #include <glib.h>
+#include "sricdriv.h"
+#include "sric.h"
 
 struct _srhw_motor {
 	int sric_addr;
@@ -32,7 +34,7 @@ void srhw_motor_power_set( srhw_motor_t* motor, uint16_t p )
 static void srhw_motor_drv_init( void )
 {
 	/* Ask libsric how many motor controllers there are */
-	n_motors = ...;
+	n_motors = srhw_sric_dev_count_get( SRIC_CLASS_MOTOR );
 
 	/* Fill the array */
 	motors = malloc( sizeof(srhw_motor_t)  * n_motors );
