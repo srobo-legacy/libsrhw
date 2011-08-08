@@ -4,7 +4,9 @@
 #include "sric.h"
 
 struct _srhw_motor {
-	int sric_addr;
+	srhw_sric_dev sric_data;
+	// if we wanted to turn this into a state-storing library,
+	// we would just add the state attributes here.
 };
 
 static srhw_motor_t* motors = NULL;
@@ -38,6 +40,7 @@ static void srhw_motor_drv_init( void )
 
 	/* Fill the array */
 	motors = malloc( sizeof(srhw_motor_t)  * n_motors );
+	srhw_sric_dev_init( n_motors, motors, sizeof(srhw_motor_t), SRIC_CLASS_MOTOR );
 }
 
 static void srhw_motor_drv_free( void )
