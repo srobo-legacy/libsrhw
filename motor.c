@@ -35,7 +35,7 @@ static void srhw_motor_drv_init( void )
 	n_motors = ...;
 
 	/* Fill the array */
-	motors = malloc( sizeof(srhw_motor_t) ) * n_motors;
+	motors = malloc( sizeof(srhw_motor_t)  * n_motors );
 }
 
 static void srhw_motor_drv_free( void )
