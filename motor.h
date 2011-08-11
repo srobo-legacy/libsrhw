@@ -6,6 +6,11 @@
 extern const srhw_driver_t srhw_motor_drv;
 typedef struct _srhw_motor srhw_motor_t;
 
+struct srhw_motor_ctx{ // the motor-related info held within a context.
+	uint16_t n_motors;
+	srhw_motor_t* motors;
+};
+
 /* Return the number of motor controllers */
 uint16_t srhw_motor_count( void );
 
