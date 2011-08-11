@@ -12,15 +12,15 @@ struct srhw_motor_ctx{ // the motor-related info held within a context.
 };
 
 /* Return the number of motor controllers */
-uint16_t srhw_motor_count( void );
+uint16_t srhw_motor_count( srhw_ctx* srhw_context );
 
 /* Return handle for motor controller n */
-srhw_motor_t* srhw_motor_get( uint16_t n );
+srhw_motor_t* srhw_motor_get( srhw_ctx* srhw_context, uint16_t n );
 
 /* Get motor power */
-uint16_t srhw_motor_power_get( srhw_motor_t* motor );
+uint16_t srhw_motor_power_get( srhw_ctx* srhw_context, srhw_motor_t* motor );
 
 /* Set motor power */
-void srhw_motor_power_set( srhw_motor_t* motor, uint16_t p );
+void srhw_motor_power_set( srhw_ctx* srhw_context, srhw_motor_t* motor, uint16_t p );
 
 #endif	/* __SRHW_MOTOR_H */
