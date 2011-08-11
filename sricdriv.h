@@ -35,6 +35,8 @@ int srhw_sric_dev_count_get( sric_dev_class dev_class );
 */
 void srhw_sric_dev_init( int count, srhw_sric_dev_t* devices, int struct_size, sric_dev_class dev_class );	
 
+void srhw_sric_enumerate_dev_class( srhw_ctx* context, sric_dev_class dev_class, const sric_device* sric_dev );
+
 #endif // __SRHW_DRV_H
 
 
