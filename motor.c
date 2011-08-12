@@ -9,12 +9,10 @@ struct _srhw_motor {
 	// we would just add the state attributes here.
 };
 
-static srhw_motor_t* motors = NULL;
-static uint16_t n_motors = 0;
-
-uint16_t srhw_motor_count( void )
+uint16_t srhw_motor_count( srhw_ctx* srhw_context )
 {
-	return n_motors;
+	// g_assert( srhw_context != NULL ); // ??
+	return srhw_context->motor.n_motor;
 }
 
 srhw_motor_t* srhw_motor_get( uint16_t n )
@@ -33,7 +31,7 @@ void srhw_motor_power_set( srhw_motor_t* motor, uint16_t p )
 	/* Interact with the motor board using libsric... */
 }
 
-static void srhw_motor_drv_init( void )
+static void srhw_motor_drv_init( srhw_ctx* srhw_context )
 {
 	/* Ask libsric how many motor controllers there are */
 	n_motors = srhw_sric_dev_count_get( SRIC_CLASS_MOTOR );
@@ -43,7 +41,7 @@ static void srhw_motor_drv_init( void )
 	srhw_sric_dev_init( n_motors, motors, sizeof(srhw_motor_t), SRIC_CLASS_MOTOR );
 }
 
-static void srhw_motor_drv_free( void )
+static void srhw_motor_drv_free( srhw_ctx* srhw_context )
 {
 	if( motors != NULL ) {
 		free(motors);
