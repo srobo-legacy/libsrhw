@@ -13,6 +13,7 @@ int srhw_init( void )
 	for( drv = drivers; *drv != NULL; drv ++ ) {
 		drv->init();
 	}
+	return 0;
 }
 
 void srhw_free( void )
