@@ -15,18 +15,19 @@ uint16_t srhw_motor_count( srhw_ctx* srhw_context )
 	return srhw_context->motor.n_motor;
 }
 
-srhw_motor_t* srhw_motor_get( uint16_t n )
+srhw_motor_t* srhw_motor_get( srhw_ctx* srhw_context, uint16_t n )
 {
-	g_assert( n < n_motors );
-	return motors[n];
+	// g_assert( srhw_context != NULL ); // ??	
+	g_assert( n < srhw_context->motor.n_motor );
+	return srhw_context->motor.motors[n]; // doesn't this need an &? (ie, right now, is this returning the stucture, not a pointer?)
 }
 
-uint16_t srhw_motor_power_get( srhw_motor_t* motor )
+uint16_t srhw_motor_power_get( srhw_ctx* srhw_context, srhw_motor_t* motor )
 {
 	/* Interact with the motor board using libsric... */
 }
 
-void srhw_motor_power_set( srhw_motor_t* motor, uint16_t p )
+void srhw_motor_power_set( srhw_ctx* srhw_context, srhw_motor_t* motor, uint16_t p )
 {
 	/* Interact with the motor board using libsric... */
 }
