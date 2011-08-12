@@ -15,16 +15,16 @@ srhw_ctx* srhw_init( void )
 
 	srhw_driver_t *drv;
 	for( drv = drivers; *drv != NULL; drv ++ ) {
-		drv->init();
+		drv->init( new_context );
 	}
-	return 0;
+	return new_context;
 }
 
-void srhw_free( void )
+void srhw_free( srhw_ctx* srhw_context )
 {
 	srhw_driver_t *drv;
 
 	for( drv = drivers; *drv != NULL; drv ++ ) {
-		drv->free();
+		drv->free( srhw_context );
 	}
 }
