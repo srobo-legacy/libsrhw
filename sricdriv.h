@@ -1,8 +1,5 @@
 /* 
-	A hardware driver to initialise the sric context
-	used by all sric-powered hardware present in libsrhw.
-
-	Also provides some convienience functions.
+	Common code related to sric for libsrhw
 */
 #ifndef __SRHW_DRV_H
 #define __SRHW_DRV_H
