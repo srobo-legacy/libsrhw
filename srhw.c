@@ -26,5 +26,7 @@ void srhw_free( srhw_ctx* srhw_context )
 
 	for( drv = drivers; *drv != NULL; drv ++ ) {
 		drv->free( srhw_context );
-	}
+	};
+
+	free( srhw_context );
 }
