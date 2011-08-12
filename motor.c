@@ -1,10 +1,10 @@
 #include "motor.h"
 #include <glib.h>
-#include "sricdriv.h"
+#include "srhwsric.h"
 #include "sric.h"
 
 struct _srhw_motor {
-	srhw_sric_dev sric_data;
+	int sric_addr;
 	// if we wanted to turn this into a state-storing library,
 	// we would just add the state attributes here.
 };
@@ -34,12 +34,35 @@ void srhw_motor_power_set( srhw_ctx* srhw_context, srhw_motor_t* motor, uint16_t
 
 static void srhw_motor_drv_init( srhw_ctx* srhw_context )
 {
-	/* Ask libsric how many motor controllers there are */
-	n_motors = srhw_sric_dev_count_get( SRIC_CLASS_MOTOR );
-
-	/* Fill the array */
-	motors = malloc( sizeof(srhw_motor_t)  * n_motors );
-	srhw_sric_dev_init( n_motors, motors, sizeof(srhw_motor_t), SRIC_CLASS_MOTOR );
+	// g_assert( srhw_context != NULL ); // ??
+	srhw_context->motor.n_motor = 0;
+	srhw_context->motor.motors = NULL;	
+	
+	/* Reallocating memory can be slow, so count once, allocate once, get data */
+	sric_device* sric_dev = NULL;
+	do
+	{
+		sric_dev = srhw_enumerate_dev_class( srhw_context, SRIC_CLASS_MOTOR, sric_dev );
+		if(sric_dev != NULL)
+		{
+			srhw_context->motor.n_motor += 1;
+		}
+	} while( sric_dev != NULL );
+	// todo: GArray:	
+	srhw_context->motor.motors = getmem( sizeof(srhw_motor_t) * srhw_context->motor.n_motor );
+	
+	sric_dev = NULL;
+	int i = 0;
+	do
+	{
+		sric_dev = srhw_enumerate_dev_class( srhw_context, SRIC_CLASS_MOTOR, sric_dev );
+		if(sric_dev != NULL)
+		{
+			srhw_context->motor.motors[i].sric_addr = sric_dev->address;
+			i += 1;
+		}
+	} while( sric_dev != NULL );
+	g_assert( i == srhw_context->motor.n_motor ); // else: Much weirdness.
 }
 
 static void srhw_motor_drv_free( srhw_ctx* srhw_context )
