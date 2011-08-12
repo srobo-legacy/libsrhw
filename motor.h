@@ -1,6 +1,7 @@
 #ifndef __SRHW_MOTOR_H
 #define __SRHW_MOTOR_H
 #include "drv.h"
+#include "srhwctx.h"
 #include <stdint.h>
 
 extern const srhw_driver_t srhw_motor_drv;
