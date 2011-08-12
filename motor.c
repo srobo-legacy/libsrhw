@@ -35,10 +35,11 @@ void srhw_motor_power_set( srhw_ctx* srhw_context, srhw_motor_t* motor, uint16_t
 static void srhw_motor_drv_init( srhw_ctx* srhw_context )
 {
 	// g_assert( srhw_context != NULL ); // ??
+	// Init fields:	
 	srhw_context->motor.n_motor = 0;
 	srhw_context->motor.motors = NULL;	
 	
-	/* Reallocating memory can be slow, so count once, allocate once, get data */
+	/* Reallocating memory can be slow, so count once, allocate once, get data: */
 	sric_device* sric_dev = NULL;
 	do
 	{
@@ -67,10 +68,11 @@ static void srhw_motor_drv_init( srhw_ctx* srhw_context )
 
 static void srhw_motor_drv_free( srhw_ctx* srhw_context )
 {
-	if( motors != NULL ) {
-		free(motors);
-		motors = NULL;
-	}
+	// g_assert( srhw_context != NULL ); // ??
+	if(srhw_context->motor.motors != NULL)
+	{
+		free(srhw_context->motor.motors);
+	};	
 }
 
 const srhw_driver_t srhw_motor_drv = {
