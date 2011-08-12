@@ -14,3 +14,4 @@ struct srhw_ctx {
 	// etc
 };
 	
+#endif // __SRHW_CTX
