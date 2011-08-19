@@ -11,6 +11,10 @@ struct _srhw_motor {
 
 typedef enum sric_motor_commnd_t {SET, GET};
 
+#define MIN_SPEED -100
+#define MAX_SPEED 100
+#define BRAKING_DEFAULT false
+
 typedef struct sric_motor_state_t{
 	int8_t speed; // in [-100..100]
 	bool brake;
@@ -58,10 +62,41 @@ uint16_t srhw_motor_power_get( srhw_ctx* srhw_context, srhw_motor_t* motor )
 	return motor_state.speed;	
 }
 
+inline int clamp( int val, min, max )
+{
+	g_assert(min <= max);	
+	if(val < min)
+	{
+		val = min;
+	};
+	if(val > max)
+	{	
+		val = max;	
+	};
+	return val;
+};
+
 void srhw_motor_power_set( srhw_ctx* srhw_context, srhw_motor_t* motor, uint16_t p )
 {	
 	g_assert( (srhw_context != NULL) && (motor != NULL) );
-		
+	
+	sric_frame txframe;
+	sric_motor_command_t cmd = SET;
+	
+	sric_motor_state_t state;
+	state.speed = clamp( p, MIN_SPEED, MAX_SPEED );
+	state.brake = BRAKING_DEFAULT; 
+
+	txframe.address = motor->sric_addr;
+	txframe.note = -1; // This is not a note, thus -1
+	txframe.payload_length = sizeof(sric_motor_command_t) + sizeof(sric_motor_state_t);
+	txframe.payload[0] = unsigned char(cmd);	
+	sric_motor_state_t(txframe.payload[1]) = state; // this is really, really tacky.
+
+	if( sric_tx( srhw_context->sric.sric_ctx, @txframe ) == 0 )
+	{
+		// Cry and cry again.
+	};
 }
 
 static void srhw_motor_drv_init( srhw_ctx* srhw_context )
