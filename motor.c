@@ -131,6 +131,7 @@ static void srhw_motor_drv_init( srhw_ctx* srhw_context )
 			i += 1;
 		}
 	} while( sric_dev != NULL );
+
 	g_assert( i == srhw_context->motor.n_motor ); // else: Much weirdness.
 }
 
