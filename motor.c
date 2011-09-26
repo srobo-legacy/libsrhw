@@ -69,6 +69,7 @@ inline int clamp( int val, min, max )
 	{
 		val = min;
 	};
+
 	if(val > max)
 	{	
 		val = max;	
