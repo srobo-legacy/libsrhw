@@ -1,10 +1,7 @@
 #ifndef __SRHW_MOTOR_H
 #define __SRHW_MOTOR_H
-#include "drv.h"
 #include "srhwctx.h"
 #include <stdint.h>
-
-extern const srhw_driver_t srhw_motor_drv;
 
 typedef struct {
 	srhw_t* ctx;
@@ -12,6 +9,10 @@ typedef struct {
 	/* The SRIC address of the motor board */
 	int addr;
 } srhw_motor_t;
+
+
+void srhw_motor_init( srhw_t* ctx );
+void srhw_motor_free( srhw_t* ctx );
 
 /* Return the number of motor controllers */
 uint16_t srhw_motor_count( srhw_t* srhw_context );

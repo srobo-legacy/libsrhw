@@ -100,51 +100,33 @@ void srhw_motor_power_set( srhw_t* srhw_context, srhw_motor_t* motor, uint16_t p
 	};
 }
 
-static void srhw_motor_drv_init( srhw_t* srhw_context )
+void srhw_motor_init( srhw_t* ctx )
 {
-	// g_assert( srhw_context != NULL ); // ??
-	// Init fields:	
-	srhw_context->motor.n_motor = 0;
-	srhw_context->motor.motors = NULL;	
-	
-	/* Reallocating memory can be slow, so count once, allocate once, get data: */
-	sric_device* sric_dev = NULL;
+	const sric_device* dev = NULL;
+
+	ctx->n_motors = 0;
+	ctx->motors = NULL;
+
 	do
 	{
-		sric_dev = srhw_enumerate_dev_class( srhw_context, SRIC_CLASS_MOTOR, sric_dev );
-		if(sric_dev != NULL)
-		{
-			srhw_context->motor.n_motor += 1;
-		}
-	} while( sric_dev != NULL );
-	// todo: GArray:	
-	srhw_context->motor.motors = getmem( sizeof(srhw_motor_t) * srhw_context->motor.n_motor );
-	
-	sric_dev = NULL;
-	int i = 0;
-	do
-	{
-		sric_dev = srhw_enumerate_dev_class( srhw_context, SRIC_CLASS_MOTOR, sric_dev );
-		if(sric_dev != NULL)
-		{
-			srhw_context->motor.motors[i].sric_addr = sric_dev->address;
-			i += 1;
-		}
-	} while( sric_dev != NULL );
+		dev = srhw_enumerate_dev_class( srhw_context, SRIC_CLASS_MOTOR, dev );
+		if( sric_dev == NULL )
+			continue;
 
-	g_assert( i == srhw_context->motor.n_motor ); // else: Much weirdness.
+		ctx->n_motors++;
+		ctx->motors = realloc( ctx->motors,
+				       sizeof(srhw_motor_t) * ctx->n_motors );
+
+		ctx->motors.ctx = ctx;
+		ctx->motors.addr = dev->address;
+
+	} while( sric_dev != NULL );
 }
 
-static void srhw_motor_drv_free( srhw_t* srhw_context )
+void srhw_motor_free( srhw_t* ctx )
 {
-	// g_assert( srhw_context != NULL ); // ??
-	if(srhw_context->motor.motors != NULL)
-	{
-		free(srhw_context->motor.motors);
-	};	
+	if( ctx->motors != NULL )
+		free( ctx->motors );
+	ctx->motors = NULL;
 }
 
-const srhw_driver_t srhw_motor_drv = {
-	.init = init,
-	.free = free,
-};

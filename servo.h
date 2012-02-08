@@ -1,11 +1,7 @@
 #ifndef __SRHW_SERVO_H
 #define __SRHW_SERVO_H
-
-#include "drv.h"
 #include "srhwctx.h"
 #include <stdint.h>
-
-extern const srhw_driver_t srhw_servo_drv;
 
 typedef struct {
 	srhw_t* ctx;
