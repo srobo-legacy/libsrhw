@@ -6,12 +6,11 @@
 #include <stdint.h>
 
 extern const srhw_driver_t srhw_servo_drv;
-typedef struct _srhw_servo srhw_servo_t;
 
-struct srhw_servo_ctx {
+typedef struct {
 	uint16_t n_servos;
 	srhw_servo_t* servos;
-};
+} srhw_servo_t;
 
 /* Return the number of servo controllers */
 uint16_t srhw_servo_count( srhw_ctx* srhw_context );
