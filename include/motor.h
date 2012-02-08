@@ -21,4 +21,10 @@ uint16_t srhw_motor_power_get( srhw_motor_t* motor );
 /* Set motor power */
 void srhw_motor_power_set( srhw_motor_t* motor, uint16_t p );
 
+/* Get motor brake */
+bool srhw_motor_brake_get(srhw_motor_t* motor);
+
+/* Set motor brake */
+bool srhw_motor_brake_set(srhw_motor_t* motor, bool state);
+
 #endif	/* __SRHW_MOTOR_H */
