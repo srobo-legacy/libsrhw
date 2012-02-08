@@ -1,10 +1,5 @@
 #ifndef __SRHW_CTX
 #define __SRHW_CTX
-
-/*
-	srhwctx.h - the header declaring the context struct
-*/
-
 #include "motor.h"
 #include "srhwsric.h"
 
