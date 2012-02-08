@@ -25,11 +25,11 @@ void srhw_jio_outputs_set( srhw_jio_t* jio, uint8_t vals );
 uint8_t	srhw_jio_outputs_get( srhw_jio_t* jio);
 
 /* Get the inputs in digital form */
-uint8_t	sr_jio_inputs_d_get( srhw_jio_t* jio );
+uint8_t srhw_jio_inputs_d_get( srhw_jio_t* jio );
 
 /* Read the analogue inputs
  * Puts the input values in array pointed to by vals.
  * If *vals is NULL, an array is allocated that the caller must free. */
-void sr_jio_inputs_a_get( srhw_jio_t* jio, uint16_t **vals );
+void srhw_jio_inputs_a_get( srhw_jio_t* jio, uint16_t **vals );
 
 #endif	/* __SRHW_JIO_H */
