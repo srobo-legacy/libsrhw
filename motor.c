@@ -20,20 +20,20 @@ typedef struct sric_motor_state_t{
 	bool brake;
 };
 	
-uint16_t srhw_motor_count( srhw_ctx* srhw_context )
+uint16_t srhw_motor_count( srhw_t* srhw_context )
 {
 	// g_assert( srhw_context != NULL ); // ??
 	return srhw_context->motor.n_motor;
 }
 
-srhw_motor_t* srhw_motor_get( srhw_ctx* srhw_context, uint16_t n )
+srhw_motor_t* srhw_motor_get( srhw_t* srhw_context, uint16_t n )
 {
 	// g_assert( srhw_context != NULL ); // ??	
 	g_assert( n < srhw_context->motor.n_motor );
 	return srhw_context->motor.motors[n]; // doesn't this need an &? (ie, right now, is this returning the stucture, not a pointer?)
 }
 
-uint16_t srhw_motor_power_get( srhw_ctx* srhw_context, srhw_motor_t* motor )
+uint16_t srhw_motor_power_get( srhw_t* srhw_context, srhw_motor_t* motor )
 {
 	g_assert( (srhw_context != NULL) && (motor != NULL) );	
 	
@@ -77,7 +77,7 @@ inline int clamp( int val, min, max )
 	return val;
 };
 
-void srhw_motor_power_set( srhw_ctx* srhw_context, srhw_motor_t* motor, uint16_t p )
+void srhw_motor_power_set( srhw_t* srhw_context, srhw_motor_t* motor, uint16_t p )
 {	
 	g_assert( (srhw_context != NULL) && (motor != NULL) );
 	
@@ -100,7 +100,7 @@ void srhw_motor_power_set( srhw_ctx* srhw_context, srhw_motor_t* motor, uint16_t
 	};
 }
 
-static void srhw_motor_drv_init( srhw_ctx* srhw_context )
+static void srhw_motor_drv_init( srhw_t* srhw_context )
 {
 	// g_assert( srhw_context != NULL ); // ??
 	// Init fields:	
@@ -135,7 +135,7 @@ static void srhw_motor_drv_init( srhw_ctx* srhw_context )
 	g_assert( i == srhw_context->motor.n_motor ); // else: Much weirdness.
 }
 
-static void srhw_motor_drv_free( srhw_ctx* srhw_context )
+static void srhw_motor_drv_free( srhw_t* srhw_context )
 {
 	// g_assert( srhw_context != NULL ); // ??
 	if(srhw_context->motor.motors != NULL)

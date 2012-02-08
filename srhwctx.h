@@ -3,9 +3,9 @@
 #include "motor.h"
 #include "srhwsric.h"
 
-typedef struct srhw_ctx {
+typedef struct {
 	srhw_sric_ctx sric; // all sric related info, as declared in srhwsric.h
 	srhw_motor_ctx motor; // all motor related info, as declared in motor.h
-} srhw_ctx;
+} srhw_t;
 	
 #endif // __SRHW_CTX

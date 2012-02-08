@@ -2,7 +2,7 @@
 #include <glib.h>
 #include <stdint.h>
 
-const sric_device* srhw_sric_enumerate_dev_class( srhw_ctx* srhw_context, sric_dev_class dev_class, const sric_device* sric_dev )
+const sric_device* srhw_sric_enumerate_dev_class( srhw_t* srhw_context, sric_dev_class dev_class, const sric_device* sric_dev )
 {
 	g_assert( srhw_context != NULL );
 	/* 

@@ -7,17 +7,17 @@
 extern const srhw_driver_t srhw_motor_drv;
 
 typedef struct {
-	srhw_ctx* ctx;
+	srhw_t* ctx;
 
 	/* The SRIC address of the motor board */
 	int addr;
 } srhw_motor_t;
 
 /* Return the number of motor controllers */
-uint16_t srhw_motor_count( srhw_ctx* srhw_context );
+uint16_t srhw_motor_count( srhw_t* srhw_context );
 
 /* Return handle for motor controller n */
-srhw_motor_t* srhw_motor_get( srhw_ctx* srhw_context, uint16_t n );
+srhw_motor_t* srhw_motor_get( srhw_t* srhw_context, uint16_t n );
 
 /* Get motor power */
 uint16_t srhw_motor_power_get( srhw_motor_t* motor );

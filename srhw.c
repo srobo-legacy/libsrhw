@@ -7,10 +7,10 @@ static const srhw_driver_t drivers[] = {
 	NULL,
 };
 
-srhw_ctx* srhw_init( void )
+srhw_t* srhw_init( void )
 {
-	srhw_ctx* new_context = NULL;		
-	new_context = getmem( sizeof(srhw_ctx) );
+	srhw_t* new_context = NULL;		
+	new_context = getmem( sizeof(srhw_t) );
 	g_assert( new_context != NULL ); // Check for out of memory. We cannot recover from that.
 
 	srhw_driver_t *drv;
@@ -20,7 +20,7 @@ srhw_ctx* srhw_init( void )
 	return new_context;
 }
 
-void srhw_free( srhw_ctx* srhw_context )
+void srhw_free( srhw_t* srhw_context )
 {
 	srhw_driver_t *drv;
 

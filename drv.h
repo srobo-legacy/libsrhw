@@ -4,8 +4,8 @@
 #include "srhwctx.h"
 
 typedef struct {
-	void (*init) ( srhw_ctx* new_context );
-	void (*free) ( srhw_ctx* doomed_context );
+	void (*init) ( srhw_t* new_context );
+	void (*free) ( srhw_t* doomed_context );
 } srhw_driver_t;
 
 #endif	/* __SRHW_DRV_H */

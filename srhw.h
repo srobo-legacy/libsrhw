@@ -5,8 +5,8 @@
 
 /* Return an initialised context.
    Will return NULL on failure. */
-srhw_ctx* srhw_init( void );
+srhw_t* srhw_init( void );
 
-void srhw_free( srhw_ctx* srhw_context );
+void srhw_free( srhw_t* srhw_context );
 
 #endif /* __SRHW_H */

@@ -10,7 +10,7 @@ struct srhw_sric_ctx {
 	sric_context sric_ctx;
 }; 
 
-const sric_device* srhw_sric_enumerate_dev_class( srhw_ctx* srhw_context, sric_dev_class dev_class, const sric_device* sric_dev );
+const sric_device* srhw_sric_enumerate_dev_class( srhw_t* srhw_context, sric_dev_class dev_class, const sric_device* sric_dev );
 
 #endif // __SRHW_DRV_H
 
