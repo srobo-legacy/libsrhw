@@ -10,7 +10,8 @@ extern const srhw_driver_t srhw_servo_drv;
 typedef struct {
 	srhw_ctx* ctx;
 
-	uint16_t n;
+	/* The SRIC address of the servo board */
+	int addr;
 } srhw_servo_t;
 
 /* Return the number of servo controllers */
