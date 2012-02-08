@@ -3,12 +3,8 @@
 #include "srhwctx.h"
 #include <stdint.h>
 
-typedef struct {
-	srhw_t* ctx;
-
-	/* The SRIC address of the servo board */
-	int addr;
-} srhw_servo_t;
+struct srhw_servo_s;
+typedef struct srhw_servo_s srhw_servo_t;
 
 /* Return the number of servo controllers */
 uint16_t srhw_servo_count( srhw_t* srhw_context );

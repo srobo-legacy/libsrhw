@@ -3,10 +3,11 @@
 #include "srhwsric.h"
 #include "sric.h"
 
-struct _srhw_motor {
-	int sric_addr;
-	// if we wanted to turn this into a state-storing library,
-	// we would just add the state attributes here. (EXCEPT THREADS)
+struct srhw_motor_s {
+	srhw_t* ctx;
+
+	/* The SRIC address of the motor board */
+	int addr;
 };
 
 typedef enum sric_motor_commnd_t {SET, GET};

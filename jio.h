@@ -3,12 +3,8 @@
 #include "srhwctx.h"
 #include <stdint.h>
 
-typedef struct {
-	srhw_t* ctx;
-
-	/* The SRIC address of the JointIO board */
-	int addr;
-} srhw_jio_t;
+struct srhw_jio_s;
+typedef struct srhw_jio_s srhw_jio_t;
 
 void srhw_jio_init( srhw_t* ctx );
 void srhw_jio_free( srhw_t* ctx );

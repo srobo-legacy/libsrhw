@@ -3,13 +3,8 @@
 #include "srhwctx.h"
 #include <stdint.h>
 
-typedef struct {
-	srhw_t* ctx;
-
-	/* The SRIC address of the motor board */
-	int addr;
-} srhw_motor_t;
-
+struct srhw_motor_s;
+typedef struct srhw_motor_s srhw_motor_t;
 
 void srhw_motor_init( srhw_t* ctx );
 void srhw_motor_free( srhw_t* ctx );

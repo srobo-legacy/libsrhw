@@ -3,12 +3,8 @@
 #include "srhwctx.h"
 #include <stdint.h>
 
-typedef struct {
-	srhw_t *ctx;
-
-	/* The SRIC address of the power board */
-	int addr;
-} srhw_power_t;
+struct srhw_power_s;
+typedef struct srhw_power_s srhw_power_t;
 
 void srhw_power_init( srhw_t* ctx );
 void srhw_power_free( srhw_t* ctx );
