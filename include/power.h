@@ -25,7 +25,13 @@ float srhw_power_current_get( srhw_power_t* pwr );
 void srhw_power_leds_set( srhw_power_t* pwr, uint8_t vals );
 
 /* Get the state of the LEDs */
-uint8_t	srhw_power_get_leds( srhw_power_t* pwr );
+uint8_t	srhw_power_leds_get( srhw_power_t* pwr );
+
+/* Set an LED */
+void srhw_power_led_set(srhw_power_t* pwr, int led, bool state);
+
+/* Get the state of an LED */
+bool srhw_power_led_get(srhw_power_t* pwr, int led);
 
 /* Turn the motor rail on/off */
 void srhw_power_motor_rail_set( srhw_power_t* pwr, bool state );
