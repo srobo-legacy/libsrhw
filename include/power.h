@@ -37,6 +37,9 @@ bool srhw_power_led_get(srhw_power_t* pwr, int led);
 void srhw_power_motor_rail_set( srhw_power_t* pwr, bool state );
 
 /* Make the power board beep */
-void srhw_power_beep(srhw_power_t* pwr, int freq, int ms);
+struct srhw_beep_s;
+typedef struct srhw_beep_s srhw_beep_t;
+
+void srhw_power_beep(srhw_power_t* pwr, srhw_beep_t* beeps, int num_beeps);
 
 #endif	/* __SRHW_POWER_H */
