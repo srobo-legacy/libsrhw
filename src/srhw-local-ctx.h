@@ -7,6 +7,8 @@
 
 struct srhw_s {
 	srhw_sric_ctx sric; // all sric related info, as declared in srhwsric.h
+	
+	sric_context *ctx;
 
 	/* List of motor boards, n_motors long */
 	uint8_t n_motors;
