@@ -11,7 +11,7 @@ struct srhw_s {
 	sric_context *ctx;
 
 	/* List of motor boards, n_motors long */
-	uint8_t n_motors;
+	uint8_t num_motors;
 	srhw_motor_t *motors;
 
 	/* List of servo boards, n_servos long */
