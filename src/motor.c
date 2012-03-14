@@ -17,11 +17,6 @@ struct srhw_motor_s {
 	int address;
 };
 
-struct srhw_motor_state_s {
-	uint16_t power;
-	bool brake;
-};
-
 void srhw_motor_init(srhw_t* srhw_ctx) {
 	g_assert(srhw_ctx != NULL);
 	
@@ -74,16 +69,17 @@ srhw_motor_t* srhw_motor_get(srhw_t* srhw_ctx, uint16_t n) {
 	return srhw_ctx->motors[n];
 }
 
-srhw_motor_state_t srhw_motor_state_get(srhw_motor_t* motor) {
+uint8_t srhw_motor_state_get(srhw_motor_t* motor, bool* brake) {
 	g_assert(motor != NULL);
 	
 	char response[2];
 	send_query(motor->srhw_ctx->ctx, CMD_MOTOR_GET, response);
-	return { .power = response[0], .brake = response[1] };
+	(*brake) = response[1];
+	return response[0];
 }
 
-void srhw_motor_state_set(srhw_motor_t* motor, srhw_motor_state_t state) {
+void srhw_motor_state_set(srhw_motor_t* motor, uint8_t power, bool brake) {
 	g_assert(motor != NULL);
-	unsigned char payload[] = {CMD_MOTOR_SET, state.power, state.brake);
+	unsigned char payload[] = {CMD_MOTOR_SET, power, brake};
 	sric_error send_message(motor->srhw_ctx->ctx, motor->address, payload, 3);
 }
