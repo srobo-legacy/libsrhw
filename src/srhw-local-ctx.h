@@ -10,13 +10,20 @@ struct srhw_s {
 	
 	sric_context *ctx;
 
-	/* List of motor boards, n_motors long */
-	uint8_t num_motors;
-	srhw_motor_t *motors;
+	/* Power board */
+	srhw_power_t *power;
 
-	/* List of servo boards, n_servos long */
-	uint8_t n_servos;
-	srhw_servo_t *servos;
+	/* List of motor boards, num_motors long */
+	uint8_t num_motors;
+	srhw_motor_t* *motors;
+
+	/* List of servo boards, num_servos long */
+	uint8_t num_servos;
+	srhw_servo_t* *servos;
+
+	/* List of jio boards, num_jios long */
+	uint8_t num_jios;
+	srhw_jio_t* *jios;
 };
 
 #endif	/* __SRHW_LOCAL_CTX_H */
