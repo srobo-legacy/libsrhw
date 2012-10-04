@@ -13,13 +13,10 @@ void srhw_power_free( srhw_t* ctx );
 uint16_t srhw_power_count( srhw_t* ctx );
 
 /* Grab power board n */
-srhw_power_t* srhw_power_get( srhw_t* ctx, uint16_t n );
+srhw_power_t* srhw_power_get(srhw_t* ctx);
 
 /* Get the voltage being supplied by the battery */
-float srhw_power_voltage_get( srhw_power_t* pwr );
-
-/* Get the current being supplied by the battery */
-float srhw_power_current_get( srhw_power_t* pwr );
+void srhw_power_supply_get( srhw_power_t* pwr, float* voltage, float* current );
 
 /* Set the LEDs */
 void srhw_power_leds_set( srhw_power_t* pwr, uint8_t vals );
@@ -37,8 +34,10 @@ bool srhw_power_led_get(srhw_power_t* pwr, int led);
 void srhw_power_motor_rail_set( srhw_power_t* pwr, bool state );
 
 /* Make the power board beep */
-struct srhw_beep_s;
-typedef struct srhw_beep_s srhw_beep_t;
+typedef struct {
+	uint16_t frequency;
+	uint16_t duration;
+} srhw_beep_t;
 
 void srhw_power_beep(srhw_power_t* pwr, srhw_beep_t* beeps, int num_beeps);
 
