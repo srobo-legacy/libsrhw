@@ -2,7 +2,9 @@
 #define __SRHW_LOCAL_CTX_H
 #include <stdint.h>
 
+#include "power.h"
 #include "motor.h"
+#include "servo.h"
 #include "srhwsric.h"
 
 struct srhw_s {

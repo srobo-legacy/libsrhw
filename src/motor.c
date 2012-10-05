@@ -29,7 +29,7 @@ void srhw_motor_init(srhw_t* srhw_ctx) {
 		}
 	}
 	uint16_t count = srhw_ctx->num_motors;
-	srhw_ctx->motors = (srhw_motor_t*)malloc(count * sizeof(srhw_motor_t*));
+	srhw_ctx->motors = (srhw_motor_t**)malloc(count * sizeof(srhw_motor_t*));
 	
 	// Add motors to array
 	device = 0;
