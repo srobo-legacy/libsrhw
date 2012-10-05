@@ -16,25 +16,19 @@ struct srhw_servo_s {
 	srhw_t* ctx;
 
 	/* The SRIC address of the servo board */
-	int addr;
+	int address;
 };
 
 void srhw_servo_init(srhw_t* srhw_ctx) {
 	g_assert(srhw_ctx != NULL);
 
 	// Count servo boards
-	const sric_device* device = 0;
-	srhw_ctx->num_servos = 0;
-	while (device = sric_enumerate_devices(srhw_ctx, device)) {
-		if (devices->type == SRIC_CLASS_SERVO) {
-			srhw_ctx->num_servos++;
-		}
-	}
-	uint16_t count = srhw_ctx->num_servos;
+	uint16_t count = srhw_count_devices(srhw_ctx, SRIC_CLASS_MOTOR);
+	srhw_ctx->num_servos = count;
 	srhw_ctx->servos = (srhw_servo_t**)malloc(count * sizeof(srhw_servo_t*));
 
 	// Add servos to array
-	device = 0;
+	const sric_device* device = 0;
 	int i = 0;
 	while (device = sric_enumerate_devices(srhw_ctx->ctx, device)) {
 		if (device->type == SRIC_CLASS_SERVO) {

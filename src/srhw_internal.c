@@ -1,6 +1,17 @@
 #include "sric.h"
 #include <stdio.h>
 
+uint16_t srhw_count_devices(srhw_ctx* ctx, sric_dev_class type) {
+	const sric_device* device = 0;
+	uint16_t count = 0;
+	while (device = sric_enumerate_devices(ctx, device)) {
+		if (devices->type == type) {
+			count++;
+		}
+	}
+	return count;
+}
+
 sric_error send_message(sric_context ctx, int address, const unsigned char* payload, int payload_length) {
 	sric_frame outframe;
 	sric_frame inframe;

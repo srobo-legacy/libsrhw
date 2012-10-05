@@ -21,18 +21,12 @@ void srhw_motor_init(srhw_t* srhw_ctx) {
 	g_assert(srhw_ctx != NULL);
 	
 	// Count motors
-	const sric_device* device = 0;
-	srhw_ctx->num_motors = 0;
-	while (device = sric_enumerate_devices(srhw_ctx, device)) {
-		if (devices->type == SRIC_CLASS_MOTOR) {
-			srhw_ctx->num_motors++;
-		}
-	}
-	uint16_t count = srhw_ctx->num_motors;
+	uint16_t count = srhw_count_devices(srhw_ctx, SRIC_CLASS_MOTOR);
+	srhw_ctx->num_motors = count;
 	srhw_ctx->motors = (srhw_motor_t**)malloc(count * sizeof(srhw_motor_t*));
 	
 	// Add motors to array
-	device = 0;
+	const sric_device* device = 0;
 	int i = 0;
 	while (device = sric_enumerate_devices(srhw_ctx->ctx, device)) {
 		if (device->type == SRIC_CLASS_MOTOR) {
@@ -48,7 +42,8 @@ void srhw_motor_init(srhw_t* srhw_ctx) {
 void srhw_motor_free(srhw_t* srhw_ctx) {
 	g_assert(srhw_ctx != NULL);
 	
-	for (int i = 0; i < srhw_ctx->num_motors; i++) {
+	int i;
+	for (i = 0; i < srhw_ctx->num_motors; i++) {
 		free(srhw_ctx->motors[i]);
 	}
 	
