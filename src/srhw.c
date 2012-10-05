@@ -9,10 +9,18 @@ srhw_t* srhw_init( void ) {
 
 	(*new_context).ctx = &sric_init();
 
+	srhw_power_init(new_context);
+	srhw_motor_init(new_context);
+	srhw_servo_init(new_context);
+	
 	return new_context;
 }
 
 void srhw_free( srhw_t* srhw_context ) {
+	srhw_power_free(srhw_context);
+	srhw_motor_free(srhw_context);
+	srhw_servo_free(srhw_context);
+
 	free( (*srhw_context).ctx );
 	free( srhw_context );
 }
