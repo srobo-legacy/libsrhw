@@ -1,6 +1,8 @@
 #include "motor.h"
+#include <stdlib.h>
 #include <glib.h>
 #include "sric.h"
+#include "srhw-local-ctx.h"
 #include "srhw_internal.h"
 
 #define CMD_MOTOR_SET 0
@@ -30,10 +32,11 @@ void srhw_motor_init(srhw_t* srhw_ctx) {
 	int i = 0;
 	while (device = sric_enumerate_devices(srhw_ctx->ctx, device)) {
 		if (device->type == SRIC_CLASS_MOTOR) {
-			srhw_ctx->motors[i] = (srhw_motor_t*)malloc(sizeof(srhw_motor_t));
-			srhw_ctx->motors[i]->srhw_ctx = &srhw_ctx;
-			srhw_ctx->motors[i]->id = i;
-			srhw_ctx->motors[i]->address = device->address;
+			srhw_motor_t* motor = (srhw_motor_t*)malloc(sizeof(srhw_motor_t));
+			motor->srhw_ctx = srhw_ctx;
+			motor->id = i;
+			motor->address = device->address;
+			srhw_ctx->motors[i] = motor;
 			i++;
 		}
 	}

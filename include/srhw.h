@@ -1,7 +1,13 @@
 #ifndef __SRHW_H
 #define __SRHW_H
-#include "motor.h"
 #include "srhwctx.h"
+#include "power.h"
+#include "motor.h"
+#include "servo.h"
+#include "jio.h"
+
+struct srhw_s;
+typedef struct srhw_s srhw_t;
 
 /* Return an initialised context.
    Will return NULL on failure. */

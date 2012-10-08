@@ -2,6 +2,7 @@
 #define __SRHW_JIO_H
 #include "srhwctx.h"
 #include <stdint.h>
+#include <stdbool.h>
 
 struct srhw_jio_s;
 typedef struct srhw_jio_s srhw_jio_t;

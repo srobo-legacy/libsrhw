@@ -1,18 +1,20 @@
 #include "jio.h"
+#include <stdlib.h>
 #include <glib.h>
 #include "sric.h"
+#include "srhw-local-ctx.h"
 #include "srhw_internal.h"
 
-#define CMD_JIO_PSU_SET    4
-#define CMD_JIO_OUTPUT_SET 0
-#define CMD_JIO_OUTPUT_GET 1
-#define CMD_JIO_INPUT_A    2
-#define CMD_JIO_INPUT_D    3
+#define CMD_PSU_SET    4
+#define CMD_OUTPUT_SET 0
+#define CMD_OUTPUT_GET 1
+#define CMD_INPUT_A    2
+#define CMD_INPUT_D    3
 
 #define NUM_INPUTS 8
 
-typedef struct srhw_servo_s {
-	srhw_t* ctx;
+struct srhw_jio_s {
+	srhw_t* srhw_ctx;
 
 	int id;
 	/* The SRIC address of the JointIO board */
@@ -22,20 +24,21 @@ typedef struct srhw_servo_s {
 void srhw_jio_init(srhw_t* srhw_ctx) {
 	g_assert(srhw_ctx != NULL);
 
-	// Count servo boards
-	uint16_t count = srhw_count_devices(srhw_ctx, SRIC_CLASS_SERVO);
-	srhw_ctx->num_servos = count;
-	srhw_ctx->servos = (srhw_servo_t**)malloc(count * sizeof(srhw_servo_t*));
+	// Count jio boards
+	uint16_t count = srhw_count_devices(srhw_ctx, SRIC_CLASS_JOINTIO);
+	srhw_ctx->num_jios = count;
+	srhw_ctx->jios = (srhw_jio_t**)malloc(count * sizeof(srhw_jio_t*));
 
-	// Add motors to array
+	// Add jio to array
 	const sric_device* device = 0;
 	int i = 0;
 	while (device = sric_enumerate_devices(srhw_ctx->ctx, device)) {
 		if (device->type == SRIC_CLASS_SERVO) {
-			srhw_ctx->servos[i] = (srhw_servo_t*)malloc(sizeof(srhw_servo_t));
-			srhw_ctx->servos[i]->srhw_ctx = &srhw_ctx;
-			srhw_ctx->servos[i]->id = i;
-			srhw_ctx->servos[i]->address = device->address;
+			srhw_jio_t* jio = (srhw_jio_t*)malloc(sizeof(srhw_jio_t));
+			jio->srhw_ctx = srhw_ctx;
+			jio->id = i;
+			jio->address = device->address;
+			srhw_ctx->jios[i] = jio;
 			i++;
 		}
 	}
@@ -45,18 +48,18 @@ void srhw_jio_free(srhw_t* srhw_ctx) {
 	g_assert(srhw_ctx != NULL);
 	
 	int i;
-	for (i = 0; i < srhw_ctx->num_servos; i++) {
-		free(srhw_ctx->servos[i]);
+	for (i = 0; i < srhw_ctx->num_jios; i++) {
+		free(srhw_ctx->jios[i]);
 	}
 
-	free(srhw_ctx->servos);
+	free(srhw_ctx->jios);
 }
 
 srhw_jio_t* srhw_jio_get(srhw_t* srhw_ctx, uint16_t n) {
 	g_assert(srhw_ctx != NULL);
-	g_assert(n < srhw_ctx->num_servos);
+	g_assert(n < srhw_ctx->num_jios);
 
-	return srhw_ctx->servos[n];
+	return srhw_ctx->jios[n];
 }
 
 void srhw_jio_psu_set(srhw_jio_t* jio, bool state) {

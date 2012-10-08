@@ -2,6 +2,7 @@
 #define __SRHW_POWER_H
 #include "srhwctx.h"
 #include <stdint.h>
+#include <stdbool.h>
 
 struct srhw_power_s;
 typedef struct srhw_power_s srhw_power_t;
@@ -9,10 +10,7 @@ typedef struct srhw_power_s srhw_power_t;
 void srhw_power_init( srhw_t* ctx );
 void srhw_power_free( srhw_t* ctx );
 
-/* Return the number of power boards */
-uint16_t srhw_power_count( srhw_t* ctx );
-
-/* Grab power board n */
+/* Grab the power board */
 srhw_power_t* srhw_power_get(srhw_t* ctx);
 
 /* Get the voltage being supplied by the battery */

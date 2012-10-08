@@ -2,6 +2,7 @@
 #define __SRHW_SERVO_H
 #include "srhwctx.h"
 #include <stdint.h>
+#include <stdbool.h>
 
 struct srhw_servo_s;
 typedef struct srhw_servo_s srhw_servo_t;

@@ -2,6 +2,7 @@
 #define __SRHW_MOTOR_H
 #include "srhwctx.h"
 #include <stdint.h>
+#include <stdbool.h>
 
 struct srhw_motor_s;
 typedef struct srhw_motor_s srhw_motor_t;

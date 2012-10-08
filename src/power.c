@@ -1,4 +1,8 @@
 #include "power.h"
+#include <stdlib.h>
+#include <glib.h>
+#include "sric.h"
+#include "srhw-local-ctx.h"
 #include "srhw_internal.h"
 
 #define CMD_PLAY_PIEZO     6
@@ -20,32 +24,29 @@ void srhw_power_init(srhw_t* srhw_ctx) {
 	g_assert(srhw_ctx != NULL);
 
 	const sric_device* device;
-	srhw_ctx->power = (srhw_power_t*)malloc(sizeof(srhw_power_t));
-	srhw_ctx->power->srhw_ctx = srhw_ctx;
-	srhw_ctx->power->address = 0;
+	srhw_power_t* power = (srhw_power_t*)malloc(sizeof(srhw_power_t));
+	power->srhw_ctx = srhw_ctx;
+	power->address = 0;
 	while (device = sric_enumerate_devices(srhw_ctx->ctx, device)) {
 		if (device->type == SRIC_CLASS_POWER) {
-			srhw_ctx->power->address = device->address;
+			power->srhw_ctx = srhw_ctx;
+			power->address = device->address;
 			break;
 		}
 	}
-	g_assert(srhw_ctx->power->address);
+	g_assert(power->address);
+	srhw_ctx->power = power;
 }
 
-void srhw_power_free(srhw_t* ctx) {
-	g_assert(ctx != NULL);
+void srhw_power_free(srhw_t* srhw_ctx) {
+	g_assert(srhw_ctx != NULL);
 	free(srhw_ctx->power);
 }
 
-uint16_t srhw_power_count(srhw_t* ctx) {
-	g_assert(ctx != NULL);
-	return ctx->num_power;
-}
+srhw_power_t* srhw_power_get(srhw_t* srhw_ctx) {
+	g_assert(srhw_ctx != NULL);
 
-srhw_power_t* srhw_power_get(srhw_t* ctx) {
-	g_assert(ctx != NULL);
-
-	return ctx->power;
+	return srhw_ctx->power;
 }
 
 // Power //
@@ -55,8 +56,8 @@ void srhw_power_supply_get(srhw_power_t* pwr, float* voltage, float* current) {
 
 	char response[4];
 	send_query(pwr->srhw_ctx->ctx, pwr->address, CMD_GET_VI, response);
-	byte voltage_raw = response[0] | (response[1] << 8);
-	byte current_raw = response[2] | (response[3] << 8);
+	uint8_t voltage_raw = response[0] | (response[1] << 8);
+	uint8_t current_raw = response[2] | (response[3] << 8);
 	*voltage = voltage_raw * VOLTAGE_MULTIPLIER;
 	*current = current_raw * CURRENT_MULTIPLIER;
 }
@@ -119,7 +120,7 @@ void srhw_power_beep(srhw_power_t* pwr, srhw_beep_t* beeps, int num_beeps) {
 	srhw_beep_t* beep = beeps;
 	for (i = 0; i < num_beeps; i++, beep++) {
 		payload[2+i+0] = MSB(beep->frequency);
-		payload[2+i+1] = LSB(beep->frequency):
+		payload[2+i+1] = LSB(beep->frequency);
 		payload[2+i+2] = MSB(beep->duration);
 		payload[2+i+3] = MSB(beep->duration);
 	}

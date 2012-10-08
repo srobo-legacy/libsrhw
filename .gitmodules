@@ -1,0 +1,3 @@
+[submodule "sricd"]
+	path = sricd
+	url = git://srobo.org/sricd.git

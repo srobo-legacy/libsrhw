@@ -1,16 +1,11 @@
 #ifndef __SRHW_LOCAL_CTX_H
 #define __SRHW_LOCAL_CTX_H
 #include <stdint.h>
-
-#include "power.h"
-#include "motor.h"
-#include "servo.h"
-#include "srhwsric.h"
+#include "srhw.h"
+#include "srhwctx.h"
 
 struct srhw_s {
-	srhw_sric_ctx sric; // all sric related info, as declared in srhwsric.h
-	
-	sric_context *ctx;
+	sric_context ctx;
 
 	/* Power board */
 	srhw_power_t *power;
