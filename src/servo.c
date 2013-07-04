@@ -34,7 +34,7 @@ void srhw_servo_init(srhw_t* srhw_ctx) {
 	// Add servos to array
 	const sric_device* device = 0;
 	int i = 0;
-	while (device = sric_enumerate_devices(srhw_ctx->ctx, device)) {
+	while ((device = sric_enumerate_devices(srhw_ctx->ctx, device))) {
 		if (device->type == SRIC_CLASS_SERVO) {
 			srhw_servo_t* servo = (srhw_servo_t*)malloc(sizeof(srhw_servo_t));
 			servo->srhw_ctx = srhw_ctx;
@@ -74,8 +74,8 @@ uint16_t srhw_servo_angle_get(srhw_servo_t* board, uint16_t servo) {
 	g_assert(board != NULL);
 	g_assert(servo < NUM_SERVOS_PER_BOARD);
 
-	char payload[] = {CMD_SERVO_GET, servo};
-	char response[2];
+	unsigned char payload[] = {CMD_SERVO_GET, servo};
+	unsigned char response[2];
 	send_query_with_payload(board->srhw_ctx->ctx, board->address, payload, 2, response);
 	return COMBINE(response[0], response[1]) / (SERVO_ANGLE/SERVO_API_ANGLE);
 }
@@ -85,13 +85,13 @@ void srhw_servo_angle_set(srhw_servo_t* board, uint16_t servo, uint16_t a) {
 	g_assert(servo < NUM_SERVOS_PER_BOARD);
 
 	uint16_t tmp = a * (SERVO_ANGLE/SERVO_API_ANGLE);
-	char payload[] = {CMD_SERVO_SET, LSB(tmp), MSB(tmp)};
+	unsigned char payload[] = {CMD_SERVO_SET, LSB(tmp), MSB(tmp)};
 	send_message(board->srhw_ctx->ctx, board->address, payload, 3);
 }
 
 void srhw_servo_smps_set(srhw_servo_t* board, bool state) {
 	g_assert(board != NULL);
 
-	char payload[] = {CMD_SERVO_SMPS, state};
+	unsigned char payload[] = {CMD_SERVO_SMPS, state};
 	send_message(board->srhw_ctx->ctx, board->address, payload, 2);
 }

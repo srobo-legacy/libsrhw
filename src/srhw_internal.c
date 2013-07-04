@@ -18,12 +18,13 @@ static char* error_to_string(sric_error error) {
 		case SRIC_ERROR_TIMEOUT:        return "Request timed out.";
 		case SRIC_ERROR_BROADCAST:      return "Cannot listen on broadcast address.";
 	}
+        return "Unknown error.";
 }
 
 uint16_t srhw_count_devices(srhw_t* srhw_ctx, sric_dev_class type) {
 	const sric_device* device = 0;
 	uint16_t count = 0;
-	while (device = sric_enumerate_devices(srhw_ctx->ctx, device)) {
+	while ((device = sric_enumerate_devices(srhw_ctx->ctx, device))) {
 		if (device->type == type) {
 			count++;
 		}

@@ -32,7 +32,7 @@ void srhw_jio_init(srhw_t* srhw_ctx) {
 	// Add jio to array
 	const sric_device* device = 0;
 	int i = 0;
-	while (device = sric_enumerate_devices(srhw_ctx->ctx, device)) {
+	while ((device = sric_enumerate_devices(srhw_ctx->ctx, device))) {
 		if (device->type == SRIC_CLASS_SERVO) {
 			srhw_jio_t* jio = (srhw_jio_t*)malloc(sizeof(srhw_jio_t));
 			jio->srhw_ctx = srhw_ctx;
@@ -65,21 +65,21 @@ srhw_jio_t* srhw_jio_get(srhw_t* srhw_ctx, uint16_t n) {
 void srhw_jio_psu_set(srhw_jio_t* jio, bool state) {
 	g_assert(jio != NULL);
 
-	char payload[] = {CMD_PSU_SET, state};
+	unsigned char payload[] = {CMD_PSU_SET, state};
 	send_message(jio->srhw_ctx->ctx, jio->address, payload, 2);
 }
 
 void srhw_jio_outputs_set(srhw_jio_t* jio, uint8_t vals) {
 	g_assert(jio != NULL);
 	
-	char payload[] = {CMD_OUTPUT_SET, vals};
+	unsigned char payload[] = {CMD_OUTPUT_SET, vals};
 	send_message(jio->srhw_ctx->ctx, jio->address, payload, 2);
 }
 
 uint8_t srhw_jio_outputs_get(srhw_jio_t* jio) {
 	g_assert(jio != NULL);
 
-	char response[1];
+	unsigned char response[1];
 	send_query(jio->srhw_ctx->ctx, jio->address, CMD_OUTPUT_GET, response);
 	return response[0];
 }
@@ -87,7 +87,7 @@ uint8_t srhw_jio_outputs_get(srhw_jio_t* jio) {
 uint8_t srhw_jio_inputs_d_get(srhw_jio_t* jio) {
 	g_assert(jio != NULL);
 
-	char response[1];
+	unsigned char response[1];
 	send_query(jio->srhw_ctx->ctx, jio->address, CMD_INPUT_D, response);
 	return response[0];
 }
@@ -97,7 +97,7 @@ void srhw_jio_inputs_a_get(srhw_jio_t* jio, uint16_t* vals) {
 	g_assert(jio != NULL);
 	g_assert(vals != NULL);
 
-	char response[NUM_INPUTS * 2];
+	unsigned char response[NUM_INPUTS * 2];
 	send_query(jio->srhw_ctx->ctx, jio->address, CMD_INPUT_A, response);
 	int i;
 	uint16_t* val = vals;

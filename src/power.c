@@ -27,7 +27,7 @@ void srhw_power_init(srhw_t* srhw_ctx) {
 	srhw_power_t* power = (srhw_power_t*)malloc(sizeof(srhw_power_t));
 	power->srhw_ctx = srhw_ctx;
 	power->address = 0;
-	while (device = sric_enumerate_devices(srhw_ctx->ctx, device)) {
+	while ((device = sric_enumerate_devices(srhw_ctx->ctx, device))) {
 		if (device->type == SRIC_CLASS_POWER) {
 			power->srhw_ctx = srhw_ctx;
 			power->address = device->address;
@@ -54,7 +54,7 @@ srhw_power_t* srhw_power_get(srhw_t* srhw_ctx) {
 void srhw_power_supply_get(srhw_power_t* pwr, float* voltage, float* current) {
 	g_assert(pwr != NULL);
 
-	char response[4];
+	unsigned char response[4];
 	send_query(pwr->srhw_ctx->ctx, pwr->address, CMD_GET_VI, response);
 	uint8_t voltage_raw = response[0] | (response[1] << 8);
 	uint8_t current_raw = response[2] | (response[3] << 8);
@@ -74,7 +74,7 @@ void srhw_power_leds_set(srhw_power_t* pwr, uint8_t vals) {
 uint8_t srhw_power_leds_get(srhw_power_t* pwr) {
 	g_assert(pwr != NULL);
 	
-	char response[1];
+	unsigned char response[1];
 	send_query(pwr->srhw_ctx->ctx, pwr->address, CMD_GET_LEDS, response);
 	return response[0];
 }
@@ -91,7 +91,7 @@ bool srhw_power_led_get(srhw_power_t* pwr, int led) {
 	g_assert(pwr != NULL);
 
 	uint8_t vals = srhw_power_leds_get(pwr);
-	return vals & (1 << led) > 0;
+	return (vals & (1 << led)) > 0;
 }
 
 // Motor Rail //

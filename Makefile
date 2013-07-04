@@ -1,6 +1,8 @@
-GCC_ARGS = `pkg-config --cflags --libs glib-2.0` -Iinclude -Isricd/libsric
+GCC_ARGS = `pkg-config --cflags --libs glib-2.0` -Iinclude -Isricd/libsric -Wall -Werror -Wextra -pedantic -std=c99
 
 all:
+	$(MAKE) -C sricd
+	mkdir -p obj bin
 	gcc -c $(GCC_ARGS) -o obj/power.o src/power.c
 	gcc -c $(GCC_ARGS) -o obj/motor.o src/motor.c
 	gcc -c $(GCC_ARGS) -o obj/servo.o src/servo.c

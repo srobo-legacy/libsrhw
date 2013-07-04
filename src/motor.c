@@ -30,7 +30,7 @@ void srhw_motor_init(srhw_t* srhw_ctx) {
 	// Add motors to array
 	const sric_device* device = 0;
 	int i = 0;
-	while (device = sric_enumerate_devices(srhw_ctx->ctx, device)) {
+	while ((device = sric_enumerate_devices(srhw_ctx->ctx, device))) {
 		if (device->type == SRIC_CLASS_MOTOR) {
 			srhw_motor_t* motor = (srhw_motor_t*)malloc(sizeof(srhw_motor_t));
 			motor->srhw_ctx = srhw_ctx;
@@ -69,7 +69,7 @@ srhw_motor_t* srhw_motor_get(srhw_t* srhw_ctx, uint16_t n) {
 uint8_t srhw_motor_state_get(srhw_motor_t* motor, bool* brake) {
 	g_assert(motor != NULL);
 	
-	char response[2];
+	unsigned char response[2];
 	send_query(motor->srhw_ctx->ctx, motor->address, CMD_MOTOR_GET, response);
 	*brake = response[1];
 	return response[0];
